@@ -1,0 +1,321 @@
+/* Tests if interrupt-driven malicious program can detect the
+   current state of any of the processes by looking at variables'
+   values. */
+
+semantics disjunctive;
+
+
+module Process0:
+  /* change this, don't touch the rest */
+  flagsymbol = "B0";
+  opflagsymbol = "B1";
+  testn = 0;
+  optestn = 1;
+  /* --------------------------------- */
+
+  i = 0;
+  for i in (0..4) {
+      vert = "s" + i;
+      bloom(vert);
+    }
+  mark_with("s0", "initial");
+  
+  setflag = flagsymbol + "set_1";
+  join_with("s0", "s1", setflag);
+
+  setkt = "B2set_" + optestn;
+  join_with("s1", "s2", setkt);
+
+  ktest = "B2is_" + testn;
+  flagtest = opflagsymbol + "is_0";
+  join_with("s2", "s3", ktest);
+  join_with("s2", "s3", flagtest);
+  mark_with("s2", "trying0");
+
+  reset = flagsymbol + "set_0";
+  join_with("s3", "s0", reset);
+  mark_with("s3", "critical0");
+
+  /* interrupts */
+  for i in (0..4) {
+      vert = "s" + i;
+      irqvert = "irq" + vert;
+      bloom(irqvert);
+      join_with(vert, irqvert, "irq");
+      join_with(irqvert, vert, "irqret");
+      }  
+
+  mark_with("irqs2", "trying0");
+  mark_with("irqs3", "critical0");
+
+  /* dummy call */
+  bloom("dummy");
+  join_with("dummy", "dummy", "B1is_1");
+  
+
+module Process1:
+  /* change this, don't touch the rest */
+  flagsymbol = "B1";
+  opflagsymbol = "B0";
+  testn = 1;
+  optestn = 0;
+  /* --------------------------------- */
+
+  i = 0;
+  for i in (0..4) {
+      vert = "s" + i;
+      bloom(vert);
+    }
+  mark_with("s0", "initial");
+  
+  setflag = flagsymbol + "set_" + testn;
+  join_with("s0", "s1", setflag);
+
+  setkt = "B2set_" + optestn;
+  join_with("s1", "s2", setkt);
+
+  ktest = "B2is_" + testn;
+  flagtest = opflagsymbol + "is_0";
+  join_with("s2", "s3", ktest);
+  join_with("s2", "s3", flagtest);
+  mark_with("s2", "trying1");
+
+  reset = flagsymbol + "set_0";
+  join_with("s3", "s0", reset);
+  mark_with("s3", "critical1");
+
+  /* interrupts */
+  for i in (0..4) {
+      vert = "s" + i;
+      irqvert = "irq" + vert;
+      bloom(irqvert);
+      join_with(vert, irqvert, "irq");
+      join_with(irqvert, vert, "irqret");
+      }  
+
+  mark_with("irqs2", "trying1");
+  mark_with("irqs3", "critical1");
+
+  /* dummy call */
+  bloom("dummy");
+  join_with("dummy", "dummy", "B0is_1");
+
+
+module B2:
+  modname = "B2";
+
+  bloom("s0");
+  mark_with("s0", "initial");
+  bloom("s1");
+  set0 = modname + "set_0";
+  set1 = modname + "set_1";
+  is0 = modname + "is_0";
+  is1 = modname + "is_1";
+  
+  join_with("s0", "s0", set0);
+  join_with("s0", "s0", is0);  
+
+  join_with("s1", "s1", set1);
+  join_with("s1", "s1", is1);  
+  
+  join_with("s0", "s1", set1);
+  join_with("s1", "s0", set0);
+
+
+  hidden = modname + "hidden";
+  his0 = hidden + "is_0";
+  his1 = hidden + "is_1";
+  join_with("s0", "s0", his0);  
+  join_with("s1", "s1", his1);  
+
+  hiddenset = modname + "hidden";
+  hset0 = hiddenset + "set_0";
+  hset1 = hiddenset + "set_1";
+  join_with("s0", "s0", hset0);  
+  join_with("s1", "s1", hset1);  
+  join_with("s0", "s1", hset1);  
+  join_with("s1", "s0", hset0);  
+
+
+module B0:
+  modname = "B0";
+
+  bloom("s0");
+  bloom("s1");
+  mark_with("s0", "initial");
+
+  set0 = modname + "set_0";
+  set1 = modname + "set_1";
+  is0 = modname + "is_0";
+  is1 = modname + "is_1";
+  
+  join_with("s0", "s0", set0);
+  join_with("s0", "s0", is0);  
+
+  join_with("s1", "s1", set1);
+  join_with("s1", "s1", is1);  
+  
+  join_with("s0", "s1", set1);
+  join_with("s1", "s0", set0);
+
+
+  hidden =  modname + "hidden";
+  his0 = hidden + "is_0";
+  his1 = hidden + "is_1";
+  join_with("s0", "s0", his0);  
+  join_with("s1", "s1", his1);  
+
+  hiddenset = modname + "hidden";
+  hset0 = hiddenset + "set_0";
+  hset1 = hiddenset + "set_1";
+  join_with("s0", "s0", hset0);  
+  join_with("s1", "s1", hset1);  
+  join_with("s0", "s1", hset1);  
+  join_with("s1", "s0", hset0);  
+
+
+module B1:
+  modname = "B1";
+
+  bloom("s0");
+  bloom("s1");
+  mark_with("s0", "initial");
+
+  set0 = modname + "set_0";
+  set1 = modname + "set_1";
+  is0 = modname + "is_0";
+  is1 = modname + "is_1";
+  
+  join_with("s0", "s0", set0);
+  join_with("s0", "s0", is0);  
+
+  join_with("s1", "s1", set1);
+  join_with("s1", "s1", is1);
+  
+  join_with("s0", "s1", set1);
+  join_with("s1", "s0", set0);
+
+
+  hidden =  modname + "hidden";
+  his0 = hidden + "is_0";
+  his1 = hidden + "is_1";
+  join_with("s0", "s0", his0);  
+  join_with("s1", "s1", his1);  
+
+  hiddenset = modname + "hidden";
+  hset0 = hiddenset + "set_0";
+  hset1 = hiddenset + "set_1";
+  join_with("s0", "s0", hset0);  
+  join_with("s1", "s1", hset1);  
+  join_with("s0", "s1", hset1);  
+  join_with("s1", "s0", hset0);  
+
+
+module Detector0:
+
+  /* var order: B0B1B2 */
+  bloom("sleeping");
+  mark_with("sleeping", "initial");
+  bloom("awake");
+  join_with("sleeping", "awake", "irq");
+
+  /* detect */
+  stn = "dst";
+  bloom("dst0");
+  bloom("dst1");
+  join_with("awake", "dst0", "B0hiddenis_0");
+  join_with("awake", "dst1", "B0hiddenis_1");
+
+  i = 0;
+  j = 0;
+  for i in (0..2)
+     for j in (0..2) {
+	source = stn + i;
+     	dstname = source + j;
+	bloom(dstname);
+	connection = "B1hiddenis_" + j;
+	join_with(source, dstname, connection);
+     }
+
+  i = 0;
+  j = 0;
+  k = 0;
+  bloom("intermediate");
+  for i in (0..2)
+     for j in (0..2) 
+        for k in (0..2) {
+	    source = (stn + i) + j;
+     	    dstname = source + k;
+	    bloom(dstname);
+	    mark_with(dstname, "detect");
+	    connection = "B2hiddenis_" + k;
+	    join_with(source, dstname, connection);
+	    join_with(dstname, "intermediate", "follow");
+     	}
+
+
+  /* enforce */
+  stn = "edst";
+  bloom("edst0");
+  bloom("edst1");
+  join_with("intermediate", "edst0", "B0hiddenset_0");
+  join_with("intermediate", "edst1", "B0hiddenset_1");
+
+  i = 0;
+  j = 0;
+  for i in (0..2)
+     for j in (0..2) {
+	source = stn + i;
+     	dstname = source + j;
+	bloom(dstname);
+	connection = "B1hiddenset_" + j;
+	join_with(source, dstname, connection);
+     }
+
+  i = 0;
+  j = 0;
+  k = 0;
+  bloom("final");
+  for i in (0..2)
+     for j in (0..2) 
+        for k in (0..2) {
+	    source = (stn + i) + j;
+     	    dstname = source + k;
+	    bloom(dstname);
+	    mark_with(dstname, "enforce");
+	    connection = "B2hiddenset_" + k;
+	    join_with(source, dstname, connection);
+	    join_with(dstname, "final", "irqret");
+     	}
+
+  mark_with("final", "done");
+
+
+verify: 
+#EF(B0is_0, B0is_1, B0set_0, B0set_1, B1is_0, B1is_1, B1set_0, 
+	    B1set_1, B2is_0, B2is_1, B2set_0, B2set_1;
+	    #AG($vars; ((not detect) or (trying1 or trying0 or critical1 or critical0)))
+)
+and
+#EF($vars; detect)
+;
+
+switches:
+B0hiddenis_0, 
+B0hiddenis_1,
+B1hiddenis_0,
+B1hiddenis_1,
+B2hiddenis_0,
+B2hiddenis_1;
+
+
+
+
+
+ 
+
+
+
+
+ 
+ 

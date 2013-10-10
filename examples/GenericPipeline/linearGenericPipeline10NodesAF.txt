@@ -1,0 +1,334 @@
+semantics disjunctive;
+
+module Node1:
+  /* change this, don't touch the rest */
+  nodeNo = 1;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node2:
+  /* change this, don't touch the rest */
+  nodeNo = 2;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node3:
+  /* change this, don't touch the rest */
+  nodeNo = 3;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node4:
+  /* change this, don't touch the rest */
+  nodeNo = 4;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node5:
+  /* change this, don't touch the rest */
+  nodeNo = 5;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node6:
+  /* change this, don't touch the rest */
+  nodeNo = 6;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node7:
+  /* change this, don't touch the rest */
+  nodeNo = 7;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node8:
+  /* change this, don't touch the rest */
+  nodeNo = 8;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node9:
+  /* change this, don't touch the rest */
+  nodeNo = 9;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+module Node10:
+  /* change this, don't touch the rest */
+  nodeNo = 10;
+  allNodes = 10;
+  /* --------------------------------- */
+
+  outnode = "state0";
+  innode = "state1";
+  bloom(outnode);
+  bloom(innode);
+
+  outmark = "out" + nodeNo;
+  inmark = "in" + nodeNo;
+  mark_with(outnode, outmark);
+  mark_with(outnode, "initial");
+  mark_with(innode, inmark);
+
+  selfTrans = "act" + nodeNo;
+  join_with(outnode, innode, selfTrans);
+
+  if(nodeNo < allNodes) {
+    nextTrans = "act" + (nodeNo + 1);
+    join_with(outnode, innode, nextTrans);
+  }
+  if(nodeNo < (allNodes - 1)) {
+    nextnextTrans = "act" + (nodeNo + 2);
+    join_with(outnode, innode, nextnextTrans);
+  }
+
+  retact = "ret" + nodeNo;
+  join_with(innode, outnode, retact);
+
+
+verify:
+#AF($var; (out1 and out2 and out3 and out4 and out5 and in6 and in7 and in8 and in9 and in10) );
