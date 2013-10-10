@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Spatula by MichalKnapik</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Spatula</h1>
+        <h2>Parametric synthesis tool for a branching action temporal logic.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/MichalKnapik/spatula/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/MichalKnapik/spatula/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/MichalKnapik/spatula" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="spatula-alpha" class="anchor" href="#spatula-alpha"><span class="octicon octicon-link"></span></a>SPATULA alpha</h1>
+
+<p>SPATULA is a simple parametric synthesis tool prototype. It takes as an input a network of graphs 
+(also called mixed transition systems) with labeled nodes and transitions and a parametric 
+branching-action logic property to be verified. The output consists of a set of substitutions
+under which the property holds. </p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>It should be easy on a recent Linux machine, just type 'make'. 
+The main dependencies are induced by Fabio Somenzi's CUDD package (here, the CUDD 2.5.0 is used).</p>
+
+<h2>
+<a name="model-description-language" class="anchor" href="#model-description-language"><span class="octicon octicon-link"></span></a>Model description language</h2>
+
+<p>The used language is a simple C-like one. A system consists of one or more independent 
+modules. A module is defined using the "module" keyword, as in:</p>
+
+<pre><code>module Single:
+  i = 0;
+  for i in (0..100) {
+    vertex = "vertex_" + i;
+    bloom(vertex);
+  }
+</code></pre>
+
+<p>(The above code creates 100 vertices, named "vertex_n" where n ranges over [0, 99].
+The range in for loop needs to be literal, without references.)</p>
+
+<p>All the used variables need to be defined and initialised. There is no variable
+shadowing, so once defined a variable is visible in its scope and all subscopes.
+Variables can only take two types, string and integer. Arithmetic operations on 
+integers are allowed; strings implement only concatenation. An integer can be added 
+to string and the result is a string via concatenation. Once a variable has an 
+associated value, its type can't be changed.</p>
+
+<pre><code>module Variables:
+/* valid statements */
+st = "a string";
+st = st + "_";  
+st = st + 1001; 
+in = 1234;
+nst = st + in;
+inval = in/0; /* causes runtime error */
+
+/* errors */
+st = 123; /* type mismatch */
+in = st; /* type mismatch */
+</code></pre>
+
+<p>Core graph-building functionalities are:</p>
+
+<pre><code>/* emerges a vertex with vertex_name */
+bloom(vertex_name); 
+
+/* labels previously emerged vertex vertex_name with proposition */
+mark_with(vertex_name, proposition); 
+</code></pre>
+
+<p>Note: if you mark a vertex with "initial" label, then it will be an initial node.</p>
+
+<pre><code>/* joins first vertex with second one (both need to be bloomed before)
+and labels the transition with trans_label                          */
+join_with(first, last, trans_label);
+</code></pre>
+
+<p>The language supports three types of flow control operations: while, if/else and for.
+The example of "for" use is shown above. The remaining operations are as in the following
+example.</p>
+
+<pre><code>module Single:
+  x = 0; max = 5;
+  while(x &lt; max) {
+
+    current = "vertex_" + x; /* current vertex name */
+    bloom(current); /* make vertex */
+
+    if(x &gt;= 1) { /* join previous and current vertices with jump label */
+    previous = "vertex_" + (x - 1);
+    join_with(previous, current, "jump"); 
+    }
+
+  if(x%2 == 1) /* mark vertices with labels */
+    mark_with(current, "p");
+  else 
+    mark_with(current, "q");
+
+  x = x + 1;    
+ }       
+
+ /* join last with first */
+ first = "vertex_" + (max - 1);
+ last = "vertex_" + 0;
+ join_with(first, last, "return");
+</code></pre>
+
+<p>Only simple comparisons are allowed in conditions, so use double 'if' in place
+of 'and', e.g., </p>
+
+<pre><code> if(i != 2) if(i != 3) mark_with(vec, "p");
+</code></pre>
+
+<p>For simple debugging the "stackdump" operation can be called to print the current interpreter stack.</p>
+
+<p>If you wish to use a disjunctive semantics for parallel composition, put:</p>
+
+<pre><code>semantics disjunctive;
+</code></pre>
+
+<p>before all module definitions.</p>
+
+<h2>
+<a name="formula-language" class="anchor" href="#formula-language"><span class="octicon octicon-link"></span></a>Formula language</h2>
+
+<p>There are two types of operators: boolean and modal; the modal operators are divided into parametric and nonparametric.
+All the natural binding rules are followed; formulae can be put in parentheses to affect the precedence, as usually.
+In what follows f and g are valid formulae.</p>
+
+<h4>
+<a name="boolean-operators" class="anchor" href="#boolean-operators"><span class="octicon octicon-link"></span></a>Boolean operators:</h4>
+
+<ul>
+<li>f and g</li>
+<li>f or g</li>
+<li>not f</li>
+</ul><h4>
+<a name="modal-operators" class="anchor" href="#modal-operators"><span class="octicon octicon-link"></span></a>Modal operators:</h4>
+
+<ul>
+<li>#EX(selector; (f))</li>
+<li>#AX(selector; (f))</li>
+<li>#EG(selector; (f))</li>
+<li>#AG(selector; (f))</li>
+<li>#EF(selector; (f))</li>
+<li>#AF(selector; (f))</li>
+<li>#EGom(selector; (f))</li>
+<li>#AGom(selector; (f))</li>
+<li>#EU(selector; (f), (g))</li>
+<li>#AU(selector; (f), (g))</li>
+</ul><p>The selector in the modal formulae can be either a set of known actions separated by comma or a variable started with 
+$ (dollar symbol), e.g.: </p>
+
+<pre><code> #EG( act1, act2, act3; proposition1 ) and #EG( $variable1 ; proposition1 );
+</code></pre>
+
+<p>A complete formula should end with semicolon.</p>
+
+<p>The set of actions allowed to be turned off in the synthesised valuations can be limited using an additional clause at the end of the file, below the formula, e.g.:</p>
+
+<pre><code>switches:
+left, right, forward;
+</code></pre>
+
+<p>The above says that we consider valuations in which left, right
+or forward may not be present (they can't all be missing simultaneously).</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
