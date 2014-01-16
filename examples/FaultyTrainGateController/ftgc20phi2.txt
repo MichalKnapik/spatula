@@ -1,0 +1,689 @@
+semantics disjunctive;
+
+module Controller:
+  trainsNo = 20;
+  faultyTrainNo = 1;
+  
+  /* correct behaviour */
+  bloom("green");
+  mark_with("green", "initial");
+  bloom("red");
+  ctr = 1;
+  while(ctr <= trainsNo) {
+     outlabel = "out" + ctr;
+     inlabel  = "in" + ctr;
+     join_with("green", "red", inlabel);
+     join_with("red", "green", outlabel);
+     ctr = ctr + 1;
+  }
+
+  /* faulty behaviour */
+  inlabelF = "inF" + faultyTrainNo;
+  outlabelF = "outF" + faultyTrainNo;
+  join_with("green", "green", inlabelF);	
+  join_with("red", "red", outlabelF);
+
+
+module Train1:
+  trainNo = 1;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train2:
+  trainNo = 2;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train3:
+  trainNo = 3;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train4:
+  trainNo = 4;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train5:
+  trainNo = 5;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train6:
+  trainNo = 6;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train7:
+  trainNo = 7;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train8:
+  trainNo = 8;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train9:
+  trainNo = 9;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train10:
+  trainNo = 10;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train11:
+  trainNo = 11;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train12:
+  trainNo = 12;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train13:
+  trainNo = 13;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train14:
+  trainNo = 14;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train15:
+  trainNo = 15;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train16:
+  trainNo = 16;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train17:
+  trainNo = 17;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train18:
+  trainNo = 18;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train19:
+  trainNo = 19;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+module Train20:
+  trainNo = 20;
+  faultyTrainNo = 1;
+
+  bloom("out");
+  mark_with("out", "initial");
+  bloom("approaching");
+  bloom("in");
+
+  outlabel = "out" + trainNo;
+  inlabel  = "in" + trainNo;
+  apprlabel  = "appr" + trainNo;
+  join_with("in", "out", outlabel);
+  join_with("out", "approaching", apprlabel);
+  join_with("approaching", "in", inlabel);
+
+  /* faulty behaviour */
+  if(trainNo == faultyTrainNo) {
+    inlabelF = "inF" + faultyTrainNo;
+    outlabelF = "outF" + faultyTrainNo;  	   
+    join_with("in", "out", outlabelF);
+    join_with("approaching", "in", inlabelF);
+  }
+
+  /* label the nodes */
+  outmark = "Train" + trainNo + "out";
+  inmark = "Train" + trainNo + "in";
+  apprmark = "Train" + trainNo + "approaching";
+  mark_with("out", outmark);
+  mark_with("in", inmark);
+  mark_with("in", apprmark);
+
+
+verify:
+#AG($var; (#EX($var; (not Train1in or Train1in))));
+switches: appr1,in1, inF1, out1, outF1;
