@@ -235,7 +235,7 @@ class Network {
 
         /* Result is expected to be an encoding of some set of parameter valuations.
            This function prints them out. */
-        void display_some_witness(BDD result, bool all);
+        void display_some_witness(BDD result, bool all, bool minimal);
 
 	/* Encodes the input valuation as BDD. Used in naive verification */
 	BDD valuation2BDD(map<string, vector<string> > valuation);
@@ -282,6 +282,9 @@ class Network {
 
         /* A map from parametric variable's name to its action BDD variables */
         stringToBDDvect parVariableNameToBDDVec;
+
+	/* Display valuation in goodVal */
+	void displayValuation(BDD& goodVal);
 
         friend class Checker;
 

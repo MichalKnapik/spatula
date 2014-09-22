@@ -627,7 +627,7 @@ bool Network::isActionConst(string actname) {
 }
 
 
-void Network::display_some_witness(BDD result, bool all = false) {
+void Network::display_some_witness(BDD result, bool all = false, bool minimal = false) {
     cout << "Printing out example valuations" << endl;
     int ctr = 0;
 
@@ -640,28 +640,21 @@ void Network::display_some_witness(BDD result, bool all = false) {
         vector<BDD> pvarv = iter->second;
         allParVars.insert(allParVars.end(), pvarv.begin(), pvarv.end());
         }
-
+    //print only prime implicants - i.e., minimal valuations
+    if(minimal) {
+      //check if the formula is monotone
+      cout << "test " << endl;
+      //display prime implicants
+    }
+    return;
+    
     //iterate over all parameter valuations in result
     while(resultcp != manager.bddZero()) {
         cout << "(" << ++ctr << ")" << endl;
         BDD goodVal = resultcp.PickOneMinterm(allParVars);
 
         //display valuation
-        for(stringToBDDvect::const_iterator iter = parVariableNameToBDDVec.begin();
-                iter != parVariableNameToBDDVec.end(); ++iter) {
-            string varName = iter->first;
-            vector<BDD> pvarv = iter->second;
-            cout << varName << " -> { ";
-            bool nonempty = false;
-            for(unsigned int i = 0; i < pvarv.size(); ++i) {
-                if(pvarv[i] * goodVal != manager.bddZero()) {
-                    cout << getActionName(pvarv[i], varName)  << ", ";;
-                    nonempty = true;
-                    }
-                }
-            if(nonempty) cout << "\b\b";
-            cout <<  " };" << endl;
-            }
+	displayValuation(goodVal);
 
         resultcp *= !goodVal; //block goodVal
 
@@ -698,3 +691,22 @@ BDD Network::valuation2BDD(map<string, vector<string> > valuation) {
 
     return result;
     }
+
+
+void Network::displayValuation(BDD& goodVal) {
+  for(stringToBDDvect::const_iterator iter = parVariableNameToBDDVec.begin();
+      iter != parVariableNameToBDDVec.end(); ++iter) {
+    string varName = iter->first;
+    vector<BDD> pvarv = iter->second;
+    cout << varName << " -> { ";
+    bool nonempty = false;
+    for(unsigned int i = 0; i < pvarv.size(); ++i) {
+      if(pvarv[i] * goodVal != manager.bddZero()) {
+	cout << getActionName(pvarv[i], varName)  << ", ";;
+	nonempty = true;
+      }
+    }
+    if(nonempty) cout << "\b\b";
+    cout <<  " };" << endl;
+  }
+}

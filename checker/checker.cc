@@ -546,6 +546,7 @@ int main(int argc, char** argv) {
     bool fileGiven = false;
     bool all = false;
     bool naive = false;
+    bool minimal = false;
     string modelFile;
 
     if(argc < 2) {
@@ -553,7 +554,7 @@ int main(int argc, char** argv) {
         exit(1);
         }
 
-    while ((o = getopt(argc, argv,"ansvhf:")) != -1) {
+    while ((o = getopt(argc, argv,"mansvhf:")) != -1) {
         switch(o) {
             case 's':
                 simulate = true;
@@ -574,12 +575,16 @@ int main(int argc, char** argv) {
                 modelFile = optarg;
                 fileGiven = true;
                 break;
+            case 'm':
+                minimal = true;
+                break;
             case 'h':
                 cout << "Usage: " << argv[0] << " [-s][-v] -f model " << endl;
                 cout << "-f model is a required link to model file" << endl;
                 cout << "-a answers 'yes' to all questions" << endl;
                 cout << "-v stands for 'verbose'; gives additional processing info" << endl;
                 cout << "-n performs naive, iterative benchmark" << endl;
+                cout << "-m finds minimal valuations for monotone formulae" << endl;
                 cout << "-s runs interactive simulation" << endl;
                 exit(0);
                 break;
@@ -639,7 +644,7 @@ int main(int argc, char** argv) {
     else {
       initres = initres.ExistAbstract(net.globalStatesCube);
       cout << "result is parametric with " << (initres).CountMinterm(net.nvars) << " valuations"  << endl; 
-        c.net.display_some_witness(initres, all);
+        c.net.display_some_witness(initres, all, minimal);
         }
 
     return 0;
