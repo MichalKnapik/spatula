@@ -643,16 +643,43 @@ void Network::display_some_witness(BDD result, bool all = false, bool minimal = 
     //print only prime implicants - i.e., minimal valuations
     if(minimal) {
       //check if the formula is monotone
-      cout << "test " << endl;
-      //display prime implicants
+      for(vector<BDD>::const_iterator it = allParVars.begin();
+	  it != allParVars.end(); ++it) {
+	  if((*it) * resultcp == manager.bddZero()) {
+	    cout << "Minimisation of non-monotonic formulae (like this one) not implemented. Exiting. " << endl;
+	    exit(0);
+ 	  }
+      }
+      //iterate over prime implicants
+      DdGen *gen; 
+      int mgrSize = manager.ReadSize();
+      int* cube = new int[mgrSize];
+      Cudd_ForeachPrime(manager.getManager(), resultcp.getNode(), 
+			resultcp.getNode(), gen, cube){
+	for(int i = 0; i < mgrSize; i++) {
+	  switch (cube[i]) {
+	  case 0:
+	    cout << "0";
+	    break;
+	  case 1:
+	    cout << "1";
+	    break;
+	  case 2:
+	    cout << "-";
+	    break;
+	  default:
+	    cout << "?";
+	  }
+	}
+	cout << endl;
+      }
+      return;
     }
-    return;
     
     //iterate over all parameter valuations in result
     while(resultcp != manager.bddZero()) {
         cout << "(" << ++ctr << ")" << endl;
         BDD goodVal = resultcp.PickOneMinterm(allParVars);
-
         //display valuation
 	displayValuation(goodVal);
 
