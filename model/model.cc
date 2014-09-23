@@ -628,7 +628,7 @@ bool Network::isActionConst(string actname) {
 
 
 void Network::display_some_witness(BDD result, bool all = false, bool minimal = false) {
-    cout << "Printing out example valuations" << endl;
+  cout << "Printing out " << (minimal? "all minimal valuations" : "example valuations") << endl;
     int ctr = 0;
 
     BDD resultcp = result;
@@ -640,6 +640,7 @@ void Network::display_some_witness(BDD result, bool all = false, bool minimal = 
         vector<BDD> pvarv = iter->second;
         allParVars.insert(allParVars.end(), pvarv.begin(), pvarv.end());
         }
+
     //print only prime implicants - i.e., minimal valuations
     if(minimal) {
       //check if the formula is monotone
@@ -654,25 +655,13 @@ void Network::display_some_witness(BDD result, bool all = false, bool minimal = 
       DdGen *gen; 
       int mgrSize = manager.ReadSize();
       int* cube = new int[mgrSize];
+
       Cudd_ForeachPrime(manager.getManager(), resultcp.getNode(), 
-			resultcp.getNode(), gen, cube){
-	for(int i = 0; i < mgrSize; i++) {
-	  switch (cube[i]) {
-	  case 0:
-	    cout << "0";
-	    break;
-	  case 1:
-	    cout << "1";
-	    break;
-	  case 2:
-	    cout << "-";
-	    break;
-	  default:
-	    cout << "?";
-	  }
-	}
-	cout << endl;
+			resultcp.getNode(), gen, cube) {
+	BDD minVal = primeCubeToBDD(cube);
+	displayValuation(minVal);
       }
+      
       return;
     }
     
@@ -736,4 +725,29 @@ void Network::displayValuation(BDD& goodVal) {
     if(nonempty) cout << "\b\b";
     cout <<  " };" << endl;
   }
+}
+
+
+BDD Network::primeCubeToBDD(int* cube) {
+    BDD result = manager.bddOne();
+    //BDD number of smallest action variable
+    int minVarNo = parVariableNameToBDDVec[origVarName][0].NodeReadIndex();
+
+    for(int i = minVarNo; i < minVarNo + nvars - 1; ++i) {
+	  switch (cube[i]) {
+	  case 1:
+	    result *= manager.bddVar(i);
+	    break;
+	  case 2:
+	    result *= !manager.bddVar(i); //suppress don't cares to find min
+	    break;
+	  default:
+	    cerr << "Error in minimisation routine. Exiting." << endl;
+	    exit(1);
+	  }
+    }
+	cout << endl;
+    //todo
+
+    return result;
 }

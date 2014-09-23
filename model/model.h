@@ -189,14 +189,14 @@ class Network {
 	   between disjunctive and conjunctive (default) markings, 
 	   e.g., if p marks state X in one component and state Y but not Z
 	   in other, then (X,Y) is labeled by p in component join under both
-	   semantics, but (X, Z) is labeled by p in disjunctive semantics
+	   semantics, but (X,Z) is labeled by p in disjunctive semantics
 	   only. */
         BDD getStatesMarkedWith(string proposition, bool disjunctive = false);
 
         /* Runs an interactive simulation of the network */
         void simulate();
 
-        /* Returns the set of pairs (x, x') such that (x,a,x') is a global transition
+        /* Returns the set of pairs (x,x') such that (x,a,x') is a global transition
            for some a in actionsSet */ 
         BDD getLabeledTransitions(set<string> actionsSet);
 
@@ -287,7 +287,10 @@ class Network {
 	void displayValuation(BDD& goodVal);
 
         friend class Checker;
-
+	
+	/* Used in prime implicant - based minimisation. Converts cube of
+	   numbers of action variables into the encoded valuation. */
+	BDD primeCubeToBDD(int* cube);
     };
 
 #endif
