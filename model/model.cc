@@ -643,14 +643,6 @@ void Network::display_some_witness(BDD result, bool all = false, bool minimal = 
 
     //print only prime implicants - i.e., minimal valuations
     if(minimal) {
-      //check if the formula is monotone
-      for(vector<BDD>::const_iterator it = allParVars.begin();
-	  it != allParVars.end(); ++it) {
-	  if((*it) * resultcp == manager.bddZero()) {
-	    cout << "Minimisation of non-monotonic formulae (like this one) not implemented. Exiting. " << endl;
-	    exit(0);
- 	  }
-      }
       //iterate over prime implicants
       DdGen *gen; 
       int mgrSize = manager.ReadSize();
@@ -743,7 +735,7 @@ BDD Network::primeCubeToBDD(int* cube) {
 	    result *= !manager.bddVar(i); //suppress don't cares to find min
 	    break;
 	  default:
-	    cerr << "Error in minimisation routine. Exiting." << endl;
+	    cout << "Minimisation of non-monotonic formulae (like this one) not implemented. Exiting. " << endl;
 	    exit(1);
 	  }
     }
