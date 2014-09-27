@@ -9,7 +9,7 @@ N: number of trains, fno: formula number
 formulae:
 1 - #AG($var; ( not ( (Train1in and Train2in) or ... )) (each pair)
     and #EF($var; Train1in) and ... (each train)
-2 - #AG($var; (#EX($var; (not Train1in or Train1in))));
+2 - #EGom($var; (#E($var; (not Train1in or Train1in))));
 3 - #EF($var;(#AG($var; ((not Train1in) and ... and (not TrainNin))));
 """
 
@@ -94,7 +94,7 @@ module Train{0}:
     formp1 = formp1 + ";"
     forms.append(formp1)
 
-    formp2 = "#AG($var; (#EX($var; (not Train1in or Train1in))));"
+    formp2 = "#EGom($varx;(#EF($vary; (" + " and ".join(["Train"+str(i)+"in" for i in range(1, trainsno + 1)]) + "))));\n"
     forms.append(formp2)
 
     formp3 = "#EF($var;(#AG($var; (" + " and ".join(["(not Train"+str(i)+"in)" for i in range(1, trainsno + 1)]) + "))));\n"
