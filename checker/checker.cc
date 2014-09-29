@@ -621,7 +621,7 @@ int main(int argc, char** argv) {
     Checker c(net, manager);
 
     //select reordering - fixed for now
-    Cudd_AutodynEnable(manager.getManager(), CUDD_REORDER_SIFT_CONVERGE);
+    Cudd_AutodynEnable(manager.getManager(), CUDD_REORDER_GROUP_SIFT_CONV);
 
     BDD res;
     cout << "Running the synthesis/verification, ";
