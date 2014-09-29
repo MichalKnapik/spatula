@@ -647,11 +647,11 @@ void Network::display_some_witness(BDD result, bool all = false, bool minimal = 
       DdGen *gen; 
       int mgrSize = manager.ReadSize();
       int* cube = new int[mgrSize];
-      int piCounter = 1;
+      int piCounter = 0;
       Cudd_ForeachPrime(manager.getManager(), resultcp.getNode(), 
 			resultcp.getNode(), gen, cube) {
 	BDD minVal = primeCubeToBDD(cube);
-	cout << "(" << piCounter++ << ")" << endl;
+	cout << "(" << (++piCounter) << ")" << endl;
 	displayValuation(minVal);
       }
       cout << "\nFound " << piCounter << " minimal valuations. " << endl;
