@@ -8,8 +8,9 @@ if __name__ == "__main__":
 N: number of nodes, fno: formula number
 formulae:
 1 - #AF($var; (in1 and in2 and ... and outN/2 and ... outN) )
-2 - #AG($var; #AF($var; (in1 and in2 and ... and inN) ));
-2 - #EF($var; #AG($var; (in1 and out2 and in3 and ...) )); (N elements)
+2 - #EG($var; #EF($var; (in1 and in2 and ... and inN) ));
+3 - #EF($var; #AG($var; (in1 and out2 and in3 and ...) )); (N elements)
+4 - #EG($varx; #EF($vary; (in1 and in2 and ... and inN) ));
 """
         print(msg)
         sys.exit()
@@ -75,6 +76,7 @@ module Node{0}:
     mixbs = " and ".join(mixb)
 
     if(formno == 1): print("\nverify:\n#AF($var; ("+ mixes + ") );")
-    if(formno == 2): print("\nverify:\n#AG($var; #AF($var;("+ ins + ") )) ;")
+    if(formno == 2): print("\nverify:\n#EGom($var; #EF($var;("+ ins + ") )) ;")
     if(formno == 3): print("\nverify:\n#EF($var; #AG($var; ("+ mixbs + ") ));")
+    if(formno == 4): print("\nverify:\n#EGom($varx; #EF($vary;("+ ins + ") )) ;")
  
