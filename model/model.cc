@@ -726,7 +726,7 @@ BDD Network::primeCubeToBDD(int* cube) {
     //BDD number of smallest action variable
     int minVarNo = parVariableNameToBDDVec[origVarName][0].NodeReadIndex();
 
-    for(int i = minVarNo; i < minVarNo + nvars - 1; ++i) {
+    for(int i = minVarNo; i < minVarNo + nvars; ++i) {
 	  switch (cube[i]) {
 	  case 1:
 	    result *= manager.bddVar(i);

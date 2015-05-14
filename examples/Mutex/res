@@ -1,0 +1,75 @@
+----------------------------------------
+Spatula: simple parametric temporal tool
+Distributed under GNU GPL v2
+(c) Michal Knapik, ICS PAS 2013
+----------------------------------------
+Reading and building the model
+Found 28 reachable states (0.00707603 sec.)
+Running the synthesis/verification, using the parametric engine
+Done (0.0018611 sec., 8.58682MB BDD memory)
+Outcome: result is parametric with 32 valuations
+Printing out example valuations
+(1)
+var -> { Enter1, SetX01, SetX1, SetX2, Start1,  };
+(2)
+var -> { Enter1, SetX01, SetX1, SetX2, Start1, Start2,  };
+(3)
+var -> { Enter1, Enter2, SetX02, SetX1, Start1, Start2,  };
+(4)
+var -> { Enter1, Enter2, SetX01, SetX02, SetX1, SetX2, Start1,  };
+(5)
+var -> { Enter1, SetX1, Start1,  };
+(6)
+var -> { Enter1, Enter2, SetX1, Start1,  };
+(7)
+var -> { Enter1, Enter2, SetX1, SetX2, Start1,  };
+(8)
+var -> { Enter1, Enter2, SetX01, SetX1, SetX2, Start1,  };
+(9)
+var -> { Enter1, Enter2, SetX01, SetX1, SetX2, Start1, Start2,  };
+(10)
+var -> { Enter1, SetX02, SetX1, Start1, Start2,  };
+(11)
+var -> { Enter1, Enter2, SetX02, SetX1, SetX2, Start1,  };
+(12)
+var -> { Enter1, SetX01, SetX1, Start1,  };
+(13)
+var -> { Enter1, Enter2, SetX1, SetX2, Start1, Start2,  };
+(14)
+var -> { Enter1, Enter2, SetX01, SetX02, SetX1, SetX2, Start1, Start2,  };
+(15)
+var -> { Enter1, SetX02, SetX1, Start1,  };
+(16)
+var -> { Enter1, SetX01, SetX02, SetX1, Start1, Start2,  };
+(17)
+var -> { Enter1, SetX01, SetX02, SetX1, SetX2, Start1,  };
+(18)
+var -> { Enter1, Enter2, SetX1, Start1, Start2,  };
+(19)
+var -> { Enter1, Enter2, SetX01, SetX02, SetX1, Start1, Start2,  };
+(20)
+var -> { Enter1, Enter2, SetX01, SetX1, Start1, Start2,  };
+(21)
+var -> { Enter1, SetX01, SetX1, Start1, Start2,  };
+(22)
+var -> { Enter1, SetX01, SetX02, SetX1, SetX2, Start1, Start2,  };
+(23)
+var -> { Enter1, SetX1, Start1, Start2,  };
+(24)
+var -> { Enter1, SetX01, SetX02, SetX1, Start1,  };
+(25)
+var -> { Enter1, Enter2, SetX01, SetX1, Start1,  };
+(26)
+var -> { Enter1, Enter2, SetX01, SetX02, SetX1, Start1,  };
+(27)
+var -> { Enter1, SetX02, SetX1, SetX2, Start1,  };
+(28)
+var -> { Enter1, Enter2, SetX02, SetX1, Start1,  };
+(29)
+var -> { Enter1, SetX1, SetX2, Start1,  };
+(30)
+var -> { Enter1, Enter2, SetX02, SetX1, SetX2, Start1, Start2,  };
+(31)
+var -> { Enter1, SetX02, SetX1, SetX2, Start1, Start2,  };
+(32)
+var -> { Enter1, SetX1, SetX2, Start1, Start2,  };
