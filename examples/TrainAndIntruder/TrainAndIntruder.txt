@@ -1,0 +1,141 @@
+semantics disjunctive;
+
+
+module VarGateDown:
+modname = "VarGateDown";
+
+  bloom("s0");
+  bloom("s1");
+
+  mark_with("s0", "initial");
+
+  set0 = modname + "set_0";
+  set1 = modname + "set_1";
+  is0 = modname + "is_0";
+  is1 = modname + "is_1";
+  
+  join_with("s0", "s0", set0);
+  join_with("s0", "s0", is0);  
+
+  join_with("s1", "s1", set1);
+  join_with("s0", "s1", set1);
+
+  join_with("s1", "s1", is1);  
+  join_with("s1", "s0", set0);
+
+
+module VarSensorActive:
+  modname = "VarSensorActive";
+
+  bloom("s0");
+  bloom("s1");
+
+  mark_with("s1", "initial");
+
+  set0 = modname + "set_0";
+  set1 = modname + "set_1";
+  is0 = modname + "is_0";
+  is1 = modname + "is_1";
+  
+  join_with("s0", "s0", set0);
+  join_with("s0", "s0", is0);  
+
+  join_with("s1", "s1", set1);
+  join_with("s0", "s1", set1);
+
+  join_with("s1", "s1", is1);  
+  join_with("s1", "s0", set0);
+
+
+module Train:
+  bloom("far");
+  bloom("approaching");
+  bloom("stopping");
+  bloom("veryclose");
+  bloom("stopped");
+  bloom("gone");
+  bloom("crash");
+
+  i = 0;
+  for i in (0..5) {
+    tn = "T" + i;
+    bloom(tn);
+  }
+
+  mark_with("far", "initial");
+
+  join_with("far", "approaching", "sensorfar");
+
+  join_with("approaching", "T0", "VarGateDownis_0");
+  join_with("approaching", "T1", "VarGateDownis_1");
+
+  join_with("T0", "T2", "VarSensorActiveis_1");
+  join_with("T0", "T1", "VarSensorActiveis_0");
+
+  join_with("T1", "veryclose", "sensorclose");
+
+  join_with("T2", "stopping", "sensorclose");
+  join_with("stopping", "stopped", "emergencystop");
+
+  join_with("veryclose", "T3", "VarGateDownis_0");
+  join_with("veryclose", "T4", "VarGateDownis_1");
+
+  join_with("T3", "crash", "pass");
+  join_with("T4", "gone", "pass");
+
+  mark_with("crash", "bad");
+
+
+module Gate:
+  bloom("up");
+  bloom("waiting");
+  bloom("waitingcut");
+  bloom("lowering");
+  bloom("G0");
+  bloom("down");
+
+  mark_with("up", "initial");
+
+  join_with("up", "waiting", "sensorfar");
+  join_with("waiting", "waitingcut", "powercut");
+  join_with("waiting", "lowering", "startlowering");
+  join_with("waitingcut", "lowering", "startlowering");
+
+  join_with("lowering", "G0", "VarGateDownset_1");
+  join_with("G0", "down", "endlowering");
+
+module Intruder:
+  bloom("idle");
+  bloom("choosing");
+  bloom("walkingsensor");
+  bloom("walkinghome");
+  bloom("I0");
+  bloom("I1");
+  bloom("intruderdone");
+  bloom("enterhouse");
+
+  mark_with("idle", "initial");
+
+  join_with("idle", "choosing", "sensorfar");
+  join_with("choosing", "walkingsensor", "walkingtowardssensor");
+  join_with("choosing", "walkinghome", "walkingtowardshome");
+
+  join_with("walkingsensor", "I0", "breaksensor");
+  join_with("walkinghome", "I1", "reachhouse");
+
+  join_with("I0", "intruderdone", "VarSensorActiveset_0");
+  join_with("I1", "enterhouse", "VarSensorActiveset_0");
+
+  join_with("enterhouse", "intruderdone", "powercut");
+
+
+verify: 
+#EF($vars; bad)
+;
+ 
+
+
+
+
+ 
+ 
