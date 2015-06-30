@@ -127,12 +127,22 @@ module Intruder:
   join_with("I1", "enterhouse", "VarSensorActiveset_0");
 
   join_with("enterhouse", "intruderdone", "powercut");
-
+  mark_with("intruderdone", "intdone");
 
 verify: 
-#EF($vars; bad)
+#EF($vars; (bad and intdone))
 ;
  
+switches:
+breaksensor,
+walkingtowardshome,
+walkingtowardssensor,
+reachhouse,
+powercut;
+
+
+
+
 
 
 
