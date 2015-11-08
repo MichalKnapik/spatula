@@ -130,7 +130,7 @@ module Intruder:
   mark_with("intruderdone", "intdone");
 
 verify: 
-#EF($vars; (bad and intdone))
+#EF( $vars; (bad and intdone) )
 ;
  
 switches:
