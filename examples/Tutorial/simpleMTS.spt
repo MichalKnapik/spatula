@@ -1,0 +1,27 @@
+module SimpleMTS:
+
+  /* create 5 states */
+  i = 0;
+  for i in (0..5) {
+      vert = "s" + i;
+      bloom(vert);
+    }
+  mark_with("s0", "initial");
+
+  mark_with("s0", "p");
+  mark_with("s1", "p");
+  mark_with("s4", "p");
+  mark_with("s2", "safe");  
+  mark_with("s3", "safe");
+
+  /* build the transition function */
+  join_with("s0", "s1", "act1");
+  join_with("s0", "s2", "act2" );
+  join_with("s1", "s0", "act4");
+  join_with("s1", "s4", "act3");
+  join_with("s1", "s3", "act2");
+  join_with("s4", "s0", "act4");
+
+verify: 
+/*#EF($Y; (safe));*/
+#AGom($Y; (p));

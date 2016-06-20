@@ -1,0 +1,31 @@
+semantics disjunctive;
+
+module One:
+
+       bloom("out");
+       bloom("in");
+
+       mark_with("out", "initial");
+       mark_with("in", "inside");
+
+       join_with("out", "in", "dive");
+       join_with("in", "out", "returnOne");		
+
+
+module Two:
+
+       bloom("out");
+       bloom("in");
+
+       mark_with("out", "initial");
+       mark_with("in", "inside");
+
+       join_with("out", "in", "dive");
+       join_with("in", "out", "returnTwo");
+       
+       join_with("in", "in", "loop");			
+
+
+verify:
+#EF($X; (#AG($X; (inside))) );
+

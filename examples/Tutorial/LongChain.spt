@@ -1,0 +1,30 @@
+module LongChain:
+
+  /* create 20 states */
+  i = 0;
+  for i in (0..20) {
+      vert = "s" + i;
+      bloom(vert);
+    }
+  mark_with("s0", "initial");
+  mark_with("s19", "goal");
+
+  /* build the transition function */
+  for i in (0..19) {
+      src = "s" + i;
+      trgt = "s" + (i+1);
+      actForward = "act" + i + "F";
+      
+      /* join the state with the next one */
+      join_with(src, trgt, actForward);
+      
+      /* join the state with the next+next one */
+      if (i < 18) {
+            actJump = "act" + i + "J";
+	    trgt = "s" + (i+2);
+      	    join_with(src, trgt, actJump);
+	    }
+  }
+
+verify:
+#EF($X; (goal));
